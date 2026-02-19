@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog] and this project adheres to [Semantic 
 - Renamed `delete_file_in_dir` to `delete_entry_in_dir` because it can now delete empty directories (breaking change)
 - Added `open_long_name_file_in_dir` API, to open files using their Long File Name
 - Updated directory iterator callback, to allow bailing out early (breaking change)
+- Added new feature `defmt` which should be used to enable `defmt` logs, `defmt-log` is kept for
+  backwards compatibility.
 
 ## [Version 0.9.0] - 2025-06-08
 
@@ -51,7 +53,7 @@ The format is based on [Keep a Changelog] and this project adheres to [Semantic 
 
 * Second FAT is now updated, if it is present
 * When creating a directory `..` now points at the root directory correctly
-* The info block containing the free cluster count is now updated when unmounting a FAT32 volume. 
+* The info block containing the free cluster count is now updated when unmounting a FAT32 volume.
 
 ## [Version 0.8.0] - 2024-07-12
 

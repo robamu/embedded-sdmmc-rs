@@ -65,8 +65,8 @@
 //! ## Features
 //!
 //! * `log`: Enabled by default. Generates log messages using the `log` crate.
-//! * `defmt-log`: By turning off the default features and enabling the
-//!   `defmt-log` feature you can configure this crate to log messages over defmt
+//! * `defmt`: By turning off the default features and enabling the
+//!   `defmt` feature you can configure this crate to log messages over defmt
 //!   instead.
 //!
 //! You cannot enable both the `log` feature and the `defmt-log` feature.
