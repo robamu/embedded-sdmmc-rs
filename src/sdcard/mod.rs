@@ -3,6 +3,7 @@
 //! This is currently optimised for readability and debugability, not
 //! performance.
 
+pub mod csd;
 pub mod proto;
 
 use crate::{Block, BlockCount, BlockDevice, BlockIdx, trace};
@@ -275,37 +276,24 @@ where
     fn num_blocks(&mut self) -> Result<BlockCount, Error> {
         let csd = self.read_csd()?;
         debug!("CSD: {:?}", csd);
-        let num_blocks = match csd {
-            Csd::V1(ref contents) => contents.card_capacity_blocks(),
-            Csd::V2(ref contents) => contents.card_capacity_blocks(),
-            Csd::V3(ref contents) => contents.card_capacity_blocks(),
-        };
-        Ok(BlockCount(num_blocks))
+        Ok(BlockCount(csd.card_capacity_blocks()))
     }
 
     /// Return the usable size of this SD card in bytes.
     fn num_bytes(&mut self) -> Result<u64, Error> {
         let csd = self.read_csd()?;
         debug!("CSD: {:?}", csd);
-        match csd {
-            Csd::V1(ref contents) => Ok(contents.card_capacity_bytes()),
-            Csd::V2(ref contents) => Ok(contents.card_capacity_bytes()),
-            Csd::V3(ref contents) => Ok(contents.card_capacity_bytes()),
-        }
+        Ok(csd.card_capacity_bytes())
     }
 
     /// Can this card erase single blocks?
     pub fn erase_single_block_enabled(&mut self) -> Result<bool, Error> {
         let csd = self.read_csd()?;
-        match csd {
-            Csd::V1(ref contents) => Ok(contents.erase_single_block_enabled()),
-            Csd::V2(ref contents) => Ok(contents.erase_single_block_enabled()),
-            Csd::V3(ref contents) => Ok(contents.erase_single_block_enabled()),
-        }
+        Ok(csd.erase_single_block_enabled())
     }
 
     /// Read the 'card specific data' block.
-    fn read_csd(&mut self) -> Result<Csd, Error> {
+    fn read_csd(&mut self) -> Result<csd::Csd, Error> {
         let mut csd_raw: [u8; 16] = [0; 16];
         match self.card_type {
             Some(CardType::SD1) => {
@@ -313,14 +301,14 @@ where
                     return Err(Error::RegisterReadError);
                 }
                 self.read_data(&mut csd_raw)?;
-                Ok(Csd::V1(CsdV1::from_be_bytes(&csd_raw)))
+                Ok(csd::Csd::V1(csd::CsdV1::from_be_bytes(&csd_raw)))
             }
             Some(CardType::SD2 | CardType::SDHC) => {
                 if self.card_command(CMD9, 0)? != 0 {
                     return Err(Error::RegisterReadError);
                 }
                 self.read_data(&mut csd_raw)?;
-                Ok(Csd::V2(CsdV2::from_be_bytes(&csd_raw)))
+                Ok(csd::Csd::V2(csd::CsdV2::from_be_bytes(&csd_raw)))
             }
             None => Err(Error::CardNotFound),
         }
