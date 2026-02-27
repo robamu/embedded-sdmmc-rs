@@ -32,6 +32,8 @@
 pub mod cid;
 pub mod csd;
 pub mod spi;
+pub mod argument;
+pub mod response;
 
 /// The different types of card we support.
 #[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
