@@ -544,7 +544,7 @@ where
 }
 
 /// Options for acquiring the card.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug)]
 pub struct AcquireOpts {
     /// Set to true to enable CRC checking on reading/writing blocks of data.
@@ -571,7 +571,7 @@ impl Default for AcquireOpts {
 }
 
 /// The possible errors this crate can generate.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Copy, Clone)]
 pub enum Error {
     /// We got an error from the SPI peripheral
@@ -631,7 +631,7 @@ impl core::fmt::Display for Error {
 impl core::error::Error for Error {}
 
 /// The different types of card we support.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum CardType {
     /// An standard-capacity SD Card supporting v1.x of the standard.

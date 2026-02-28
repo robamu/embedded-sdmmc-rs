@@ -10,7 +10,7 @@ use crate::{Error, RawVolume, VolumeManager};
 use super::ToShortFileName;
 
 /// A directory entry, which tells you about other files and directories.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct DirEntry {
     /// The name of the file
@@ -47,7 +47,7 @@ pub struct DirEntry {
 /// Mutex or RefCell, and deal with the fact you can't put them both in the same
 /// struct any more because one refers to the other. Basically, it's complicated
 /// and there's a reason we did it this way.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct RawDirectory(pub(crate) Handle);
 
@@ -280,7 +280,7 @@ where
     }
 }
 
-#[cfg(feature = "defmt-log")]
+#[cfg(feature = "defmt")]
 impl<'a, D, T, const MAX_DIRS: usize, const MAX_FILES: usize, const MAX_VOLUMES: usize>
     defmt::Format for Directory<'a, D, T, MAX_DIRS, MAX_FILES, MAX_VOLUMES>
 where
@@ -293,7 +293,7 @@ where
 }
 
 /// Holds information about an open file on disk
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Clone)]
 pub(crate) struct DirectoryInfo {
     /// The handle for this directory.

@@ -2,7 +2,7 @@ use crate::{BlockCount, BlockIdx, ClusterId};
 use byteorder::{ByteOrder, LittleEndian};
 
 /// Indentifies the supported types of FAT format
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub enum FatSpecificInfo {
     /// Fat16 Format
@@ -12,7 +12,7 @@ pub enum FatSpecificInfo {
 }
 
 /// FAT32 specific data
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Fat32Info {
     /// The root directory does not have a reserved area in FAT32. This is the
@@ -23,7 +23,7 @@ pub struct Fat32Info {
 }
 
 /// FAT16 specific data
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Fat16Info {
     /// The block the root directory starts in. Relative to start of partition

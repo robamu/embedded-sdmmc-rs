@@ -3,7 +3,7 @@
 use core::num::Wrapping;
 
 #[derive(Clone, Copy, PartialEq, Eq)]
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 /// Unique ID used to identify things in the open Volume/File/Directory lists
 pub struct Handle(pub(crate) u32);
 

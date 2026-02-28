@@ -174,7 +174,7 @@ where
 ///
 /// The first block on a disk gets `BlockIdx(0)` (which usually contains the
 /// Master Boot Record).
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct BlockIdx(pub u32);
 
@@ -222,7 +222,7 @@ impl core::ops::SubAssign<BlockCount> for BlockIdx {
 /// The a number of blocks (or sectors).
 ///
 /// Add this to a `BlockIdx` to get an actual address on disk.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct BlockCount(pub u32);
 

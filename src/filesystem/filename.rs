@@ -4,7 +4,7 @@ use crate::fat::VolumeName;
 use crate::trace;
 
 /// Various filename related errors that can occur.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Clone)]
 pub enum FilenameError {
     /// Tried to create a file with an invalid character.
@@ -47,7 +47,7 @@ impl ToShortFileName for &str {
 ///
 /// ISO-8859-1 encoding is assumed. All lower-case is converted to upper-case by
 /// default.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct ShortFileName {
     pub(crate) contents: [u8; Self::TOTAL_LEN],

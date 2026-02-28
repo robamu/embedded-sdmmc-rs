@@ -1060,7 +1060,7 @@ where
     /// If you get an error, then you cannot be sure how much of `buffer` was
     /// successfully written, nor can you rely on the current seek position.
     pub fn write(&self, file: RawFile, buffer: &[u8]) -> Result<(), Error<D::Error>> {
-        #[cfg(feature = "defmt-log")]
+        #[cfg(feature = "defmt")]
         debug!("write(file={:?}, buffer={:x}", file, buffer);
 
         #[cfg(feature = "log")]

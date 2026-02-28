@@ -10,7 +10,7 @@ pub trait TimeSource {
 ///
 /// TODO: Consider replacing this with POSIX time as a `u32`, which would save
 /// two bytes at the expense of some maths.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Copy, Clone, PartialOrd, Ord, PartialEq, Eq)]
 pub struct Timestamp {
     /// Add 1970 to this file to get the calendar year

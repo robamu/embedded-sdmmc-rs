@@ -23,7 +23,7 @@ use embedded_io::{ErrorType, Read, Seek, SeekFrom, Write};
 /// and deal with the fact you can't put them both in the same struct any more
 /// because one refers to the other. Basically, it's complicated and there's a
 /// reason we did it this way.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct RawFile(pub(crate) Handle);
 
@@ -270,7 +270,7 @@ impl<
     }
 }
 
-#[cfg(feature = "defmt-log")]
+#[cfg(feature = "defmt")]
 impl<'a, D, T, const MAX_DIRS: usize, const MAX_FILES: usize, const MAX_VOLUMES: usize>
     defmt::Format for File<'a, D, T, MAX_DIRS, MAX_FILES, MAX_VOLUMES>
 where
@@ -283,7 +283,7 @@ where
 }
 
 /// Errors related to file operations
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum FileError {
     /// Tried to use an invalid offset.
@@ -291,7 +291,7 @@ pub enum FileError {
 }
 
 /// The different ways we can open a file.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, PartialEq, Eq, Copy, Clone)]
 pub enum Mode {
     /// Open a file for reading, if it exists.
@@ -309,7 +309,7 @@ pub enum Mode {
 }
 
 /// Internal metadata about an open file
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Clone)]
 pub(crate) struct FileInfo {
     /// Handle for this file

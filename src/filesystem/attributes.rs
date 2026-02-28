@@ -2,7 +2,7 @@
 
 /// Indicates whether a directory entry is read-only, a directory, a volume
 /// label, etc.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Copy, Clone, PartialOrd, Ord, PartialEq, Eq)]
 pub struct Attributes(pub(crate) u8);
 

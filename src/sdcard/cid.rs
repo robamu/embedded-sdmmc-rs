@@ -10,7 +10,7 @@ use crate::sdcard::crc7;
 pub struct ChecksumInvalidError;
 
 /// Card IDentification (CID) register structure.
-#[bitbybit::bitfield(u128, debug, defmt_fields(feature = "defmt-log"))]
+#[bitbybit::bitfield(u128, debug, defmt_fields(feature = "defmt"))]
 pub struct Cid {
     /// MID.
     #[bits(120..=127, rw)]

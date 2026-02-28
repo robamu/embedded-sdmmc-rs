@@ -65,11 +65,11 @@
 //! ## Features
 //!
 //! * `log`: Enabled by default. Generates log messages using the `log` crate.
-//! * `defmt-log`: By turning off the default features and enabling the
-//!   `defmt-log` feature you can configure this crate to log messages over defmt
+//! * `defmt`: By turning off the default features and enabling the
+//!   `defmt` feature you can configure this crate to log messages over defmt
 //!   instead.
 //!
-//! You cannot enable both the `log` feature and the `defmt-log` feature.
+//! You cannot enable both the `log` feature and the `defmt` feature.
 
 #![cfg_attr(not(test), no_std)]
 #![deny(missing_docs)]
@@ -120,30 +120,30 @@ mod volume_mgr;
 #[doc(inline)]
 pub use volume_mgr::VolumeManager;
 
-#[cfg(all(feature = "defmt-log", feature = "log"))]
-compile_error!("Cannot enable both log and defmt-log");
+#[cfg(all(feature = "defmt", feature = "log"))]
+compile_error!("Cannot enable both log and defmt");
 
 #[cfg(feature = "log")]
 use log::{debug, trace, warn};
 
-#[cfg(feature = "defmt-log")]
+#[cfg(feature = "defmt")]
 use defmt::{debug, trace, warn};
 
-#[cfg(all(not(feature = "defmt-log"), not(feature = "log")))]
+#[cfg(all(not(feature = "defmt"), not(feature = "log")))]
 #[macro_export]
 /// Like log::debug! but does nothing at all
 macro_rules! debug {
     ($($arg:tt)+) => {};
 }
 
-#[cfg(all(not(feature = "defmt-log"), not(feature = "log")))]
+#[cfg(all(not(feature = "defmt"), not(feature = "log")))]
 #[macro_export]
 /// Like log::trace! but does nothing at all
 macro_rules! trace {
     ($($arg:tt)+) => {};
 }
 
-#[cfg(all(not(feature = "defmt-log"), not(feature = "log")))]
+#[cfg(all(not(feature = "defmt"), not(feature = "log")))]
 #[macro_export]
 /// Like log::warn! but does nothing at all
 macro_rules! warn {
@@ -157,7 +157,7 @@ macro_rules! warn {
 // ****************************************************************************
 
 /// All the ways the functions in this crate can fail.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Clone)]
 pub enum Error<E>
 where
@@ -326,7 +326,7 @@ impl<E> core::error::Error for Error<E> where E: core::fmt::Debug + core::fmt::D
 ///
 /// Instead you must pass it to [`crate::VolumeManager::close_volume`] to close
 /// it cleanly.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct RawVolume(Handle);
 
@@ -435,7 +435,7 @@ where
     }
 }
 
-#[cfg(feature = "defmt-log")]
+#[cfg(feature = "defmt")]
 impl<'a, D, T, const MAX_DIRS: usize, const MAX_FILES: usize, const MAX_VOLUMES: usize>
     defmt::Format for Volume<'a, D, T, MAX_DIRS, MAX_FILES, MAX_VOLUMES>
 where
@@ -448,7 +448,7 @@ where
 }
 
 /// Internal information about a Volume
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, PartialEq, Eq)]
 pub(crate) struct VolumeInfo {
     /// Handle for this volume.
@@ -461,7 +461,7 @@ pub(crate) struct VolumeInfo {
 
 /// This enum holds the data for the various different types of filesystems we
 /// support.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, PartialEq, Eq)]
 pub enum VolumeType {
     /// FAT16/FAT32 formatted volumes.
@@ -471,7 +471,7 @@ pub enum VolumeType {
 /// A number which identifies a volume (or partition) on a disk.
 ///
 /// `VolumeIdx(0)` is the first primary partition on an MBR partitioned disk.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, PartialEq, Eq, Copy, Clone)]
 pub struct VolumeIdx(pub usize);
 

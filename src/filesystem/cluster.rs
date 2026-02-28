@@ -4,7 +4,7 @@
 ///
 /// A cluster is a consecutive group of blocks. Each cluster has a a numeric ID.
 /// Some numeric IDs are reserved for special purposes.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Copy, Clone, PartialEq, Eq, Ord, PartialOrd)]
 pub struct ClusterId(pub(crate) u32);
 

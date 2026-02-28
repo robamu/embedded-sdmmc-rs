@@ -28,7 +28,7 @@ use crate::{
 ///
 /// MS-DOS FDISK would show you the one in the BPB, but DIR would show you the
 /// one in the root directory.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(PartialEq, Eq, Clone)]
 pub struct VolumeName {
     pub(crate) contents: [u8; Self::TOTAL_LEN],
@@ -143,7 +143,7 @@ impl core::fmt::Debug for VolumeName {
 }
 
 /// Identifies a FAT16 or FAT32 Volume on the disk.
-#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Debug, PartialEq, Eq)]
 pub struct FatVolume {
     /// The block number of the start of the partition. All other BlockIdx values are relative to this.
@@ -616,7 +616,7 @@ impl FatVolume {
             ) -> Self {
                 #[cfg(feature = "log")]
                 debug!("LFN Contents {start} {sequence} {csum:02x} {buffer:04x?}");
-                #[cfg(feature = "defmt-log")]
+                #[cfg(feature = "defmt")]
                 debug!(
                     "LFN Contents {=bool} {=u8} {=u8:02x} {=[?; 13]:#04x}",
                     start, sequence, csum, buffer
@@ -840,7 +840,7 @@ impl FatVolume {
                     debug!("Am waiting for LFN start");
                     let mut remaining = match_name;
                     if let Some((true, sequence, csum, buffer)) = odde.lfn_contents() {
-                        #[cfg(feature = "defmt-log")]
+                        #[cfg(feature = "defmt")]
                         debug!("{:02x} {:02x} {:04x}", sequence, csum, buffer);
                         #[cfg(feature = "log")]
                         debug!("{:02x} {:02x} {:04x?}", sequence, csum, buffer);
@@ -894,7 +894,7 @@ impl FatVolume {
                     );
                     let mut remaining = remaining;
                     if let Some((false, this_sequence, this_csum, buffer)) = odde.lfn_contents() {
-                        #[cfg(feature = "defmt-log")]
+                        #[cfg(feature = "defmt")]
                         debug!("{:02x} {:02x} {:04x}", sequence, csum, buffer);
                         #[cfg(feature = "log")]
                         debug!("{:02x} {:02x} {:04x?}", sequence, csum, buffer);

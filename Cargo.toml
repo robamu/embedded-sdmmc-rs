@@ -35,6 +35,8 @@ sha2 = "0.10"
 
 [features]
 default = ["log"]
-defmt-log = ["dep:defmt", "arbitrary-int/defmt"]
+defmt = ["dep:defmt", "arbitrary-int/defmt"]
 log = ["dep:log"]
 
+# Legacy feature name.
+defmt-log = ["defmt"]
