@@ -7,6 +7,7 @@ use arbitrary_int::u24;
 /// Voltage settings supplied in CMD8.
 #[bitbybit::bitenum(u4, exhaustive = false)]
 #[derive(Debug, Default, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-log", derive(defmt::Format))]
 pub enum VoltageSuppliedSelect {
     /// Regular voltage range.
     #[default]
